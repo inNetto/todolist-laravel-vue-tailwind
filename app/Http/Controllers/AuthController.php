@@ -9,13 +9,18 @@ class AuthController extends Controller
 {
     private $authService;
 
-    public  function _construct(AuthService $authService){
+    /**
+     * AuthController constructor.
+     * @param $authService
+     */
+    public function __construct(AuthService $authService)
+    {
         $this->authService = $authService;
     }
 
     public function login(AuthLoginRequest $request) {
 
         $input = $request->validated();
-        $this->authService->login($input['email'],$input['password']);
+        return $this->authService->login($input['email'],$input['password']);
     }
 }

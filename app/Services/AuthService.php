@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Exceptions\LoginInvalidException;
+
 class AuthService
 {
     public function login(string $email, string $password){
@@ -14,7 +16,7 @@ class AuthService
         ];
 
         if (! $token = auth()->attempt($login)){
-
+            throw new LoginInvalidException();
         }
 
         return[
