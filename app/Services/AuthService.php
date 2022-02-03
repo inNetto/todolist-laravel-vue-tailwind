@@ -8,6 +8,12 @@ use App\Exceptions\LoginInvalidException;
 
 class AuthService
 {
+    /**
+     * @param string $email
+     * @param string $password
+     * @return array
+     * @throws LoginInvalidException
+     */
     public function login(string $email, string $password){
 
         $login = [

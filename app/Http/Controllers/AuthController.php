@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\LoginInvalidException;
 use App\Http\Requests\AuthLoginRequest;
+use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 
 class AuthController extends Controller
@@ -18,9 +20,16 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
+    /**
+     * @param AuthLoginRequest $request
+     * @return UserResource
+     */
     public function login(AuthLoginRequest $request) {
 
         $input = $request->validated();
-        return $this->authService->login($input['email'],$input['password']);
+
+        $token = $this->authService->login($input['email'], $input['password']);
+
+        return (new UserResource(auth()->user()))->additional($token);
     }
 }
